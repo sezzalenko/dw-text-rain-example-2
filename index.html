@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>It's Raining</title>
+
+    <meta name="description" content="text rain" />
+    <!-- styles -->
+    <style>
+      body {
+        position: relative;
+      }
+      .character {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>It's raining</h1>
+    <p>
+    
+    </p>
+    <!-- script -->
+    <script>
+      const uniqueRainCharacters = [
+        "😺",
+        "🐶",
+      ];
+      const totalCharacters = 60;
+      const offSet = 20;
+      let rainCharacters = [];
+      
+      function getRandomFromList(list) {
+        return list[Math.floor(Math.random() * list.length)];
+      }
+      
+      function setUpRain() {
+        let body = document.querySelector("body");
+        for (let charCount = 0; charCount < totalCharacters; charCount++) {
+          rainCharacters.push(getRandomFromList(uniqueRainCharacters));
+        }
+        for (let count = 0; count < rainCharacters.length; count++) {
+          const char = document.createElement("div");
+          char.innerHTML = rainCharacters[count];
+          char.id = "char-" + count;
+          char.style.top = Math.floor(Math.random() * (window.innerHeight - 30)) + "px";
+          char.style.left = Math.floor(Math.random() * (window.innerWidth - 30)) + "px";
+          char.classList.add("character");
+          body.appendChild(char);
+        }
+      }
+      
+      function makeItRain() {
+        for (let count = 0; count < rainCharacters.length; count++) {
+          const char = document.getElementById("char-" + count);
+          let top = Math.floor(char.getBoundingClientRect().top - offSet) + 1;
+          if (top + 60 > window.innerHeight) {
+            top = 0;
+            char.style.left = Math.floor(Math.random() * (window.innerWidth - 30)) + "px";
+          }
+          char.style.top = top + "px";
+        }
+      }
+      setUpRain()
+      window.setInterval(makeItRain, 10);
+    </script>
+    <!-- include the Glitch button to show what the webpage is about and
+          to make it easier for folks to view source and remix -->
+    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js" defer></script>
+  </body>
+</html>
